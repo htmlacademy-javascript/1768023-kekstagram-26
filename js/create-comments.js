@@ -50,10 +50,10 @@ const createPhotoComment = () => ({
 // функция по генерации описания к фотографии
 const createPhotoDescription = () => ({
   id: orderRandomId.shift(),
-  url: `photos/${  pickNumbers(0, AMOUNT_URL) }.jpg`,
+  url: `photos/${  pickNumbers(1, AMOUNT_URL) }.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS_PHOTO),
   likes: pickNumbers(AMOUNT_LIKES_MIN, AMOUNT_LIKES_MAX),
-  commets: createPhotoComment(),
+  comments: createPhotoComment(),
 });
 
 // создание массива из 25-ти объектов описания к фотографиям
