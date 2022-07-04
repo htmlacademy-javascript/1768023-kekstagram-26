@@ -1,4 +1,4 @@
-import {createPhotoCommentsArray} from './create-comments.js';
+import {createPhotoCommentsArray, } from './create-comments.js';
 import './show-miniatures.js';
 import './show-big-photo.js';
 

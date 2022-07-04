@@ -79,5 +79,6 @@ const createPhotoDescription = () => {
 
 // создание массива из 25-ти объектов описания к фотографиям
 const createPhotoCommentsArray = () => Array.from({length: AMOUNT_ID + 1}, createPhotoDescription);
+const photosArray = createPhotoCommentsArray();
 
-export {generationPhotoCommentArray, createPhotoCommentsArray};
+export {generationPhotoCommentArray, createPhotoCommentsArray, createPhotoDescription, photosArray };

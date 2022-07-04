@@ -39,4 +39,7 @@ const shuffleArray = (arr) => {
   return arr;
 };
 
-export {pickNumbers, checkLength, getRandomArrayElement, generationArray, shuffleArray};
+// проверка клика на ESC
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {pickNumbers, checkLength, getRandomArrayElement, generationArray, shuffleArray, isEscapeKey};

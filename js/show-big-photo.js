@@ -1,4 +1,6 @@
-import { generationPhotoCommentArray } from './create-comments.js';
+//открытие полноразмерного изображения
+import { generationPhotoCommentArray, photosArray} from './create-comments.js';
+import { isEscapeKey } from './util.js';
 
 const bigPhotoSection = document.querySelector('.big-picture');// модуль для отрисовки полноразмерного изображения
 const bigPhotoImg = bigPhotoSection.querySelector('.big-picture__img img'); // полноразмерное изображение
@@ -13,18 +15,18 @@ const bigPhotoDescription = bigPhotoSection.querySelector('.social__caption');//
 const newPhotoLoader = bigPhotoSection.querySelector('.comments-loader'); // кнопка загрузки новых комментариев
 const bigPhotoClose = document.querySelector('.big-picture__cancel'); // кнопка закрытия полноэкранного изображения
 
-// код для закрытия модального окна по клику и ESC
-function bigPhotoClosed () {
-  bigPhotoClose.addEventListener('click', () => {
-    bigPhotoSection.classList.add('hidden');
-  });
+// код для закрытия модального окна по клику
+const onPopupClickClose = () =>  {
+  closeBigPhoto();
+};
 
-  document.addEventListener('keydown', (evt) => {
-    if(evt.keyCode === 27) {
-      bigPhotoSection.classList.add('hidden');
-    }
-  });
-}
+// закрытие по ECS
+const onPopupEscKeydown = (evt) => {
+  if(isEscapeKey(evt)) {
+    evt.preventDefault ();
+    closeBigPhoto();
+  }
+};
 
 // функция создания комментариев к полноразмерной фотографии
 const commentsBigPhoto = generationPhotoCommentArray(3); //вызвала с параметром для проверки работоспособности
@@ -41,33 +43,38 @@ const generateCommentsBigPhoto = () => {
   commentsList.append(commentsBigPhotoFragment);
 };
 
-// генерация описания к фотографии
-const generateDescriptionBigPhoto = (bigPhoto) => {
-  bigPhotoImg.src = bigPhoto.url;
-  bigPhotoLikesCounter.textContent = bigPhoto.likes;
-  bigPhotoCommentsScore.textContent = bigPhoto.comments;
-  bigPhotoDescription.textContent = bigPhoto.description;
-};
-
 // функция по открытию полноразмерного размера фотографии
-function openBigPhoto () {
+function openBigPhoto (dataBigPhoto) {
   bigPhotoSection.classList.remove('hidden');
   bigPhotoCommentsCounter.classList.add('hidden');
   newPhotoLoader.classList.add('hidden');
   document.body.classList.add('modal-open');
 
+  const {url, likes, comments, description} = dataBigPhoto;
+  bigPhotoImg.src = url;
+  bigPhotoLikesCounter.textContent = likes;
+  bigPhotoCommentsScore.textContent = comments;
+  bigPhotoDescription.textContent = description;
   generateCommentsBigPhoto();
+
+  //добавление обработчиков
+  document.addEventListener('keydown', onPopupEscKeydown);
+  bigPhotoClose.addEventListener('click', onPopupClickClose);
 }
 
 // функция по закрытию фотографии
 function closeBigPhoto () {
+  bigPhotoSection.classList.add('hidden');
+
   bigPhotoCommentsCounter.classList.remove('hidden');
   newPhotoLoader.classList.remove('hidden');
   document.body.classList.remove('modal-open');
-  bigPhotoClosed();
+
+  //удаление обработчиков
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  bigPhotoClose.removeEventListener('click', onPopupClickClose);
 }
 
-closeBigPhoto();
-openBigPhoto();
+openBigPhoto(photosArray[0]);
 
-export {bigPhotoSection, openBigPhoto, closeBigPhoto, generateCommentsBigPhoto, generateDescriptionBigPhoto};
+export {openBigPhoto, generateCommentsBigPhoto};
