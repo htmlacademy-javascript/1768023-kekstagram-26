@@ -57,14 +57,13 @@ const generationPhotoCommentArray = (commentsCount) => {
   for(let i = 0; i <= commentsCount; i++) {
     generatePhotoComments[i] = {
       id: pickNumbers(0, AMOUNT_ID),
-      avatar: `img/avatar-${pickNumbers(0, AMOUNT_AVATAR)}.svg`,
+      avatar: `img/avatar-${pickNumbers(1, AMOUNT_AVATAR)}.svg`,
       message: getRandomArrayElement(MESSAGES_COMMENT),
       name: getRandomArrayElement(NAMES_USER),
     };
   }
   return generatePhotoComments;
 };
-
 
 // функция по генерации описания к фотографии
 const createPhotoDescription = () => {
@@ -73,12 +72,13 @@ const createPhotoDescription = () => {
     url: `photos/${  pickNumbers(1, AMOUNT_URL) }.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS_PHOTO),
     likes: pickNumbers(AMOUNT_LIKES_MIN, AMOUNT_LIKES_MAX),
-    comments: generationPhotoCommentArray(pickNumbers(MIN_COUNT_COMMENT, MAX_COUNT_COMMENT)),
+    comments: generationPhotoCommentArray(pickNumbers(MIN_COUNT_COMMENT, MAX_COUNT_COMMENT)).length,
   };
   return photoDescription;
 };
 
 // создание массива из 25-ти объектов описания к фотографиям
 const createPhotoCommentsArray = () => Array.from({length: AMOUNT_ID + 1}, createPhotoDescription);
+const photosArray = createPhotoCommentsArray();
 
-export {createPhotoCommentsArray};
+export {generationPhotoCommentArray, createPhotoCommentsArray, createPhotoDescription, photosArray };

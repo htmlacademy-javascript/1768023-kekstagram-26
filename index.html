@@ -207,6 +207,18 @@
     </a>
   </template>
 
+  <!-- Шаблон списка комментариев под полноразмерным изображением -->
+  <template id="social__comment">
+  <li class="social__comment">
+    <img
+        class="social__picture"
+        src="{{аватар}}"
+        alt="{{имя комментатора}}"
+        width="35" height="35">
+    <p class="social__text">{{текст комментария}}</p>
+</li>
+</template>
+
   <!-- Сообщение с ошибкой загрузки изображения -->
   <template id="error">
     <section class="error">
