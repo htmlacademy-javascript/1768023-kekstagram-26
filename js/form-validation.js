@@ -62,7 +62,7 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagInput,
   checkReHashtag,
-  'Пожалуйста, проверьте правильность написания: хэштег начинается с #,'
+  'Пожалуйста, проверьте правильность написания: хэштег начинается с #'
 );
 
 pristine.addValidator(
