@@ -7,7 +7,6 @@ const AMOUNT_LIKES_MAX = 200;
 const AMOUNT_AVATAR = 6;
 const MIN_COUNT_COMMENT = 1;
 const MAX_COUNT_COMMENT = 10;
-// const MAX_COMMENT_LENGTH = 140; понадобится позже
 
 const MESSAGES_COMMENT = [
   'Всё отлично!',
