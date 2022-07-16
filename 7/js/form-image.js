@@ -19,9 +19,8 @@ const onPopupEscKeydown = (evt) => {
   }
 };
 
-// ругается eslint
-// eslint-disable-next-line no-unused-vars
-function imageUploadOpen (imageUser) {
+
+function imageUploadOpen () {
   inputImgUpload.addEventListener('click', (evt) => {
     evt.preventDefault();
     formImgOverlay.classList.remove('hidden');

@@ -16,35 +16,43 @@ const regSymbolsHashtag = /^#[A-Za-zА-Яа-яЁё0-9]{0,100}(\s#[A-Za-zА-Яа-
 const pristine = new Pristine(formImgUpload, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'error__inner',
+  errorTextClass: 'img-upload__field-wrapper--invalid',
 });
 
 // // функция для проверки максимальной длины строки
 const checkLength = (commentText) => commentText.length <= MAX_COMMENT_LENGTH;
 
-//создание массива из значения хештега
-function createHashtagArray () {
-  return hashtagInput.value.toLowerCase().trim().split(' ');
-}
-
-// проверка через регулярное выражение
-function checkReHashtag () {
-  const hashtagArray = createHashtagArray();
-  return regSymbolsHashtag.test(hashtagArray);
-}
+//проверка через регулярное выражение
+const checkReHashtag = (valueHashtag) => regSymbolsHashtag.test(valueHashtag);
 
 //проверка на количество хештегов
-function checkCounthHashtag () {
-  const hashtagArray = createHashtagArray();
+const checkCounthHashtag = (valueHashtag) => {
+  const hashtagArray = valueHashtag.toLowerCase().trim().split(' ');
   return hashtagArray.length <= MIN_HASHTAG_COUNT;
-}
+};
 
-//проверка на длину хэштега
-function checkLengthHashtag () {
-  const hashtagArray = createHashtagArray();
-  return hashtagArray.length <= MIN_HASHTAG_LENGTH || hashtagArray.length >= MAX_HASHTAG_LENGTH;
-}
+// проверка на длину одного хэштега
+const checkLengthHashtag = (valueHashtag) => {
+  const hashtagArray = valueHashtag.toLowerCase().trim().split(' ');
+  for(let i = 0; i < hashtagArray.length; i++) {
+    if(hashtagArray[i].length < MIN_HASHTAG_LENGTH || hashtagArray[i].length >= MAX_HASHTAG_LENGTH) {
+      return false;
+    }
+    return true;
+  }
+};
 
+//проверка на повторение хештега
+const checkDublicateHashtag = (valueHashtag) => {
+  const hashtagArray = valueHashtag.toLowerCase().trim().split(' ');
+  return hashtagArray.length === (new Set(hashtagArray).size);
+};
+
+pristine.addValidator(
+  hashtagInput,
+  checkReHashtag,
+  'Пожалуйста, проверьте правильность написания: хэштег начинается с #, не может содержать символы после #, и не может иметь пробелы',
+);
 
 pristine.addValidator (
   hashtagInput,
@@ -61,8 +69,8 @@ pristine.addValidator(
 
 pristine.addValidator(
   hashtagInput,
-  checkReHashtag,
-  'Пожалуйста, проверьте правильность написания: хэштег начинается с #'
+  checkDublicateHashtag,
+  'Хэштег не может повторяться'
 );
 
 pristine.addValidator(
