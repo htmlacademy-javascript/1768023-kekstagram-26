@@ -9,12 +9,6 @@ const pickNumbers = (min, max) => {
 
 pickNumbers(3, 600);
 
-// функция для проверки максимальной длины строки
-const checkLength = (stringLength, maxStringLength) => stringLength.length <= maxStringLength;
-
-// здесь ругается линтер, понадобится позже
-// checkLength('Я проверяю длину строки, а ты?', MAX_COMMENT_LENGTH);
-
 // функция по генерации случайного элемента из массива
 const getRandomArrayElement = (elements) => elements[pickNumbers(0, elements.length - 1)];
 
@@ -42,4 +36,4 @@ const shuffleArray = (arr) => {
 // проверка клика на ESC
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {pickNumbers, checkLength, getRandomArrayElement, generationArray, shuffleArray, isEscapeKey};
+export {pickNumbers, getRandomArrayElement, generationArray, shuffleArray, isEscapeKey};
