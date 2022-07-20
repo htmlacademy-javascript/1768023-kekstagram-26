@@ -2,7 +2,7 @@
 import { generationPhotoCommentArray, photosArray} from './create-comments.js';
 import { isEscapeKey } from './util.js';
 
-const MAX_COMMENT_COUNT =5;
+// const MAX_COMMENT_COUNT =5;
 
 const bigPhotoSection = document.querySelector('.big-picture');// модуль для отрисовки полноразмерного изображения
 const bigPhotoImg = bigPhotoSection.querySelector('.big-picture__img img'); // полноразмерное изображение
@@ -31,7 +31,7 @@ const onPopupEscKeydown = (evt) => {
 };
 
 // функция создания комментариев к полноразмерной фотографии
-const commentsBigPhoto = generationPhotoCommentArray(MAX_COMMENT_COUNT); //вызвала с параметром для проверки работоспособности
+const commentsBigPhoto = generationPhotoCommentArray();
 const commentsBigPhotoFragment = document.createDocumentFragment();
 
 const generateCommentsBigPhoto = () => {
@@ -55,11 +55,6 @@ const showComments = (count) => {
   }
 };
 
-newCommentLoader.addEventListener('click', () => {
-  generateCommentsBigPhoto();
-});
-
-showComments(3); //вызвала с числом для проверки
 
 // функция по открытию полноразмерного размера фотографии
 function openBigPhoto (dataBigPhoto) {
@@ -71,12 +66,14 @@ function openBigPhoto (dataBigPhoto) {
   bigPhotoLikesCounter.textContent = likes;
   bigPhotoCommentsScore.textContent = comments;
   bigPhotoDescription.textContent = description;
-  generateCommentsBigPhoto();
 
+  generateCommentsBigPhoto(photosArray[0]);
   //добавление обработчиков
   document.addEventListener('keydown', onPopupEscKeydown);
   bigPhotoClose.addEventListener('click', onPopupClickClose);
+  newCommentLoader.addEventListener('click', showComments);
 }
+
 
 // функция по закрытию фотографии
 function closeBigPhoto () {
@@ -88,6 +85,7 @@ function closeBigPhoto () {
   document.removeEventListener('keydown', onPopupEscKeydown);
   bigPhotoClose.removeEventListener('click', onPopupClickClose);
 }
+
 
 openBigPhoto(photosArray[0]);
 
